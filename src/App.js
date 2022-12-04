@@ -1,0 +1,26 @@
+import { useState } from 'react';
+import 'font-awesome/css/font-awesome.min.css';
+import products from './products.json';
+import ShoppingCard from './components/Shopping-card.js';
+import Search from './components/Search.js';
+
+export default function App() {
+	const [searchTerm, setSearchTerm] = useState('');
+	const handleSearch = (event) => {
+		setSearchTerm(event.target.value);
+	};
+
+	const searchedItems = products.filter((product) => {
+		return product.title.includes(searchTerm);
+	});
+
+	return (
+		<div className="App">
+			<Search search={searchTerm} onSearch={handleSearch} />
+
+			{searchedItems.map((item) => {
+				return <ShoppingCard card={item} />;
+			})}
+		</div>
+	);
+}
